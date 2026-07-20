@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Atom: A History — Year 9 Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#013148; --lime:#BDD675; --coral:#F46E63; --pink:#F38C9F;
+  --sky:#C0E7F8; --sage:#7AC698;
+  --paper:#FBFAF7; --ink:#1b2733; --muted:#5b6b78;
+  --radius:14px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); line-height:1.6;}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important;} }
+
+/* ---------- header ---------- */
+header{background:var(--teal); color:#fff; padding:46px 20px 38px; position:relative; overflow:hidden;}
+.head-inner{max-width:980px; margin:0 auto; position:relative; z-index:2;}
+.eyebrow{font-size:.78rem; letter-spacing:.22em; text-transform:uppercase; color:var(--sky); font-weight:700;}
+h1{font-family:'DM Serif Display',serif; font-size:clamp(2.1rem,5.5vw,3.4rem); line-height:1.08; margin:.35em 0 .3em;}
+.sub{max-width:620px; color:#cfe3ee; font-size:1.02rem;}
+.orbits{position:absolute; right:-60px; top:-40px; width:340px; opacity:.35; z-index:1;}
+@media(max-width:700px){ .orbits{width:220px; right:-70px;} }
+
+/* pacing strip */
+.pacing{max-width:980px; margin:22px auto 0; display:flex; border-radius:999px; overflow:hidden; font-size:.72rem; font-weight:700; letter-spacing:.03em; color:var(--teal);}
+.pacing span{padding:6px 4px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+/* ---------- tabs ---------- */
+nav{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:2px solid #e6e2d8; box-shadow:0 2px 10px rgba(1,49,72,.06);}
+.tabs{max-width:980px; margin:0 auto; display:flex; overflow-x:auto;}
+.tab{flex:1; min-width:120px; border:none; background:none; padding:14px 10px; font:700 .85rem 'DM Sans',sans-serif; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap;}
+.tab:hover{color:var(--teal);}
+.tab.active{color:var(--teal); border-bottom-color:var(--coral);}
+.tab:focus-visible{outline:3px solid var(--coral); outline-offset:-3px;}
+
+main{max-width:980px; margin:0 auto; padding:34px 20px 80px;}
+section.panel{display:none;}
+section.panel.active{display:block; animation:fade .35s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+h2{font-family:'DM Serif Display',serif; font-size:1.9rem; color:var(--teal); padding-left:14px; border-left:6px solid var(--coral); margin-bottom:6px;}
+.panel-note{color:var(--muted); margin-bottom:24px; font-size:.95rem;}
+
+.wash{border-radius:var(--radius); padding:20px 22px; margin:18px 0;}
+.wash.sky{background:#eaf6fc; border-left:6px solid var(--sky);}
+.wash.lime{background:#f4f9e6; border-left:6px solid var(--lime);}
+.wash.coral{background:#fdefed; border-left:6px solid var(--coral);}
+.wash.sage{background:#eef8f2; border-left:6px solid var(--sage);}
+.wash h3{color:var(--teal); font-size:1.05rem; margin-bottom:8px;}
+
+button.action{background:var(--teal); color:#fff; border:none; border-radius:999px; padding:10px 22px; font:700 .9rem 'DM Sans',sans-serif; cursor:pointer;}
+button.action:hover{background:#02405d;}
+button.action.ghost{background:none; color:var(--teal); border:2px solid var(--teal);}
+button:focus-visible{outline:3px solid var(--coral); outline-offset:2px;}
+
+/* ---------- do now ---------- */
+.donow-q{margin:14px 0;}
+.donow-q p{font-weight:700;}
+.donow-q textarea{width:100%; min-height:56px; border:2px solid #dfe6ea; border-radius:10px; padding:10px; font:1rem 'DM Sans',sans-serif; margin-top:6px;}
+.reveal{display:none; margin-top:8px; padding:10px 14px; background:#eef8f2; border-left:4px solid var(--sage); border-radius:8px; font-size:.92rem;}
+.reveal.show{display:block;}
+
+/* ---------- scientists ---------- */
+.sci-layout{display:grid; grid-template-columns:280px 1fr; gap:24px; align-items:start;}
+@media(max-width:760px){ .sci-layout{grid-template-columns:1fr;} }
+.atom-stage{position:sticky; top:74px; background:var(--teal); border-radius:var(--radius); padding:16px; text-align:center;}
+.atom-stage svg{width:100%; max-width:240px;}
+.atom-label{color:var(--sky); font-weight:700; font-size:.85rem; margin-top:6px; min-height:2.4em;}
+@media(max-width:760px){ .atom-stage{position:static;} }
+.sci-list{display:flex; flex-direction:column; gap:14px;}
+.sci-card{background:#fff; border:2px solid #e8e4da; border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:box-shadow .2s, border-color .2s; text-align:left; width:100%; font:inherit; color:inherit; padding:0;}
+.sci-card:hover{box-shadow:0 6px 18px rgba(1,49,72,.1);}
+.sci-card.open{border-color:var(--teal);}
+.sci-head{display:flex; gap:16px; align-items:center; padding:14px 16px;}
+.sci-head img, .sci-head .ph{width:64px; height:64px; border-radius:50%; object-fit:cover; object-position:top; flex-shrink:0; border:3px solid var(--sky); background:#eaf6fc;}
+.sci-head .ph{display:flex; align-items:center; justify-content:center; font:700 1.2rem 'DM Serif Display',serif; color:var(--teal);}
+.sci-title h3{font-family:'DM Serif Display',serif; color:var(--teal); font-size:1.2rem;}
+.sci-title .dates{font-size:.8rem; color:var(--muted); font-weight:700; letter-spacing:.06em;}
+.sci-tag{margin-left:auto; font-size:.72rem; font-weight:700; padding:4px 12px; border-radius:999px; color:var(--teal); white-space:nowrap;}
+.sci-body{display:none; padding:0 16px 18px; border-top:1px dashed #e0dbd0;}
+.sci-card.open .sci-body{display:block;}
+.sci-body p{margin-top:12px; font-size:.95rem;}
+.sci-body .kw{font-weight:700; color:var(--teal);}
+.think{margin-top:12px; padding:10px 14px; background:#fdf3f5; border-left:4px solid var(--pink); border-radius:8px; font-size:.9rem;}
+
+/* ---------- timeline ---------- */
+.tl-pool, .tl-slots{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+.tl-item{background:#fff; border:2px solid #e0dbd0; border-radius:10px; padding:12px 16px; cursor:pointer; font-weight:500; display:flex; align-items:center; gap:10px; width:100%; text-align:left; font-size:.95rem; font-family:'DM Sans',sans-serif; color:var(--ink);}
+.tl-item .dot{width:12px; height:12px; border-radius:50%; flex-shrink:0;}
+.tl-item.selected{border-color:var(--coral); box-shadow:0 0 0 3px #f46e6333;}
+.tl-slot{border:2px dashed #c8c2b4; border-radius:10px; min-height:52px; padding:6px; display:flex; align-items:center; gap:10px; cursor:pointer; background:#faf8f2;}
+.tl-slot .slot-num{font:700 .95rem 'DM Serif Display',serif; color:var(--muted); width:34px; text-align:center; flex-shrink:0;}
+.tl-slot .tl-item{border-style:solid; margin:0; flex:1;}
+.tl-slot.correct{border-color:var(--sage); background:#eef8f2;}
+.tl-slot.wrong{border-color:var(--coral); background:#fdefed;}
+.tl-controls{margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+#tl-result{font-weight:700;}
+
+/* ---------- match ---------- */
+.match-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:14px;}
+@media(max-width:640px){ .match-grid{grid-template-columns:1fr;} }
+.match-col{display:flex; flex-direction:column; gap:10px;}
+.match-col h3{color:var(--teal); font-size:.95rem;}
+.m-item{background:#fff; border:2px solid #e0dbd0; border-radius:10px; padding:12px 14px; cursor:pointer; font-size:.92rem; text-align:left; font-family:'DM Sans',sans-serif; color:var(--ink); width:100%;}
+.m-item.selected{border-color:var(--coral); box-shadow:0 0 0 3px #f46e6333;}
+.m-item.matched{border-color:var(--sage); background:#eef8f2; cursor:default; opacity:.85;}
+.m-item.shake{animation:shake .3s;}
+@keyframes shake{25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+#match-done{display:none; margin-top:16px;}
+
+/* ---------- quiz ---------- */
+.q{background:#fff; border:2px solid #e8e4da; border-radius:var(--radius); padding:18px 20px; margin:14px 0;}
+.q p.stem{font-weight:700; margin-bottom:10px;}
+.q .opts{display:flex; flex-direction:column; gap:8px;}
+.q .opt{border:2px solid #e0dbd0; border-radius:10px; padding:10px 14px; cursor:pointer; text-align:left; font:1rem 'DM Sans',sans-serif; background:#fff; color:var(--ink);}
+.q .opt:hover{border-color:var(--sky);}
+.q .opt.right{border-color:var(--sage); background:#eef8f2;}
+.q .opt.wrong{border-color:var(--coral); background:#fdefed;}
+.q .fb{display:none; margin-top:10px; font-size:.9rem; padding:8px 12px; border-radius:8px;}
+.q .fb.show{display:block;}
+.q .fb.good{background:#eef8f2; border-left:4px solid var(--sage);}
+.q .fb.bad{background:#fdefed; border-left:4px solid var(--coral);}
+#quiz-score{margin-top:14px; font-weight:700; font-size:1.05rem; color:var(--teal);}
+
+/* ---------- exit ---------- */
+.exit textarea{width:100%; min-height:150px; border:2px solid #dfe6ea; border-radius:10px; padding:12px; font:1rem 'DM Sans',sans-serif; margin-top:10px;}
+.starter{display:inline-block; margin:4px 6px 0 0; padding:5px 12px; background:#eaf6fc; border:1px solid var(--sky); border-radius:999px; font-size:.82rem; cursor:pointer; font-family:'DM Sans',sans-serif; color:var(--ink);}
+
+footer{background:var(--teal); color:#9fbecd; text-align:center; padding:24px 20px; font-size:.82rem;}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="orbits" viewBox="0 0 200 200" aria-hidden="true">
+    <g fill="none" stroke="#C0E7F8" stroke-width="1.5">
+      <ellipse cx="100" cy="100" rx="90" ry="34" transform="rotate(20 100 100)"/>
+      <ellipse cx="100" cy="100" rx="90" ry="34" transform="rotate(80 100 100)"/>
+      <ellipse cx="100" cy="100" rx="90" ry="34" transform="rotate(140 100 100)"/>
+    </g>
+    <circle cx="100" cy="100" r="10" fill="#F46E63"/>
+  </svg>
+  <div class="head-inner">
+    <p class="eyebrow">Year 9 Science · Chemical Sciences · AC9S9U06</p>
+    <h1>The Atom: A History</h1>
+    <p class="sub">Nobody has ever seen an atom directly — yet we know what's inside one. This lesson follows 2,400 years of thinkers and experiments that built, broke, and rebuilt our model of the atom.</p>
+    <div class="pacing" aria-label="Lesson pacing guide">
+      <span style="background:var(--sky); flex:1;">Do Now · 5'</span>
+      <span style="background:var(--lime); flex:3;">Scientists · 15'</span>
+      <span style="background:var(--pink); flex:2;">Timeline · 10'</span>
+      <span style="background:var(--sage); flex:2;">Match &amp; Quiz · 10'</span>
+      <span style="background:var(--coral); flex:2; color:#fff;">Exit · 10'</span>
+    </div>
+  </div>
+</header>
+
+<nav aria-label="Lesson sections">
+  <div class="tabs">
+    <button class="tab active" data-panel="p1">1 · Launch</button>
+    <button class="tab" data-panel="p2">2 · The Scientists</button>
+    <button class="tab" data-panel="p3">3 · Timeline Challenge</button>
+    <button class="tab" data-panel="p4">4 · Model Match</button>
+    <button class="tab" data-panel="p5">5 · Quiz &amp; Exit Ticket</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ================= PANEL 1 ================= -->
+<section class="panel active" id="p1">
+  <h2>Launch</h2>
+  <p class="panel-note">Answer from memory — no looking ahead. Click <em>Reveal</em> to check yourself.</p>
+
+  <div class="wash sky">
+    <h3>Learning intentions</h3>
+    <p>By the end of this lesson you can: <strong>(1)</strong> name the key scientists who developed atomic theory, <strong>(2)</strong> describe how each experiment changed the model of the atom, and <strong>(3)</strong> explain why scientific models change when new evidence appears.</p>
+  </div>
+
+  <div class="donow-q">
+    <p>1. What is everything around you — this screen, the air, you — made of?</p>
+    <textarea aria-label="Answer to question 1"></textarea>
+    <button class="action ghost" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+    <div class="reveal">Matter — and all matter is made of <strong>atoms</strong>. A single drop of water contains about 1.5 sextillion of them.</div>
+  </div>
+
+  <div class="donow-q">
+    <p>2. Name one particle that is <em>smaller</em> than an atom.</p>
+    <textarea aria-label="Answer to question 2"></textarea>
+    <button class="action ghost" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+    <div class="reveal">Protons, neutrons and electrons are the three subatomic particles you need this year.</div>
+  </div>
+
+  <div class="donow-q">
+    <p>3. If nobody has ever seen an atom with their eyes, how could scientists possibly know what one looks like?</p>
+    <textarea aria-label="Answer to question 3"></textarea>
+    <button class="action ghost" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+    <div class="reveal">Indirect evidence. Scientists fire things at atoms, pass electricity through gases, and measure what happens — then build a <strong>model</strong> that explains the results. That's exactly what this lesson is about.</div>
+  </div>
+
+  <div class="wash coral">
+    <h3>The big idea</h3>
+    <p>A scientific <strong>model</strong> is not a photograph — it's our current best explanation of the evidence. When new evidence turns up that the model can't explain, the model has to change. The atom's model has changed at least five times.</p>
+  </div>
+</section>
+
+<!-- ================= PANEL 2 ================= -->
+<section class="panel" id="p2">
+  <h2>The Scientists</h2>
+  <p class="panel-note">Click each card to open it. Watch the atom on the left — it redraws itself to match each scientist's model.</p>
+
+  <div class="sci-layout">
+    <div class="atom-stage" aria-live="polite">
+      <svg id="atom-svg" viewBox="0 0 200 200" role="img" aria-label="Diagram of the current atomic model"></svg>
+      <div class="atom-label" id="atom-label">Click a scientist to see their model</div>
+    </div>
+
+    <div class="sci-list" id="sci-list"></div>
+  </div>
+</section>
+
+<!-- ================= PANEL 3 ================= -->
+<section class="panel" id="p3">
+  <h2>Timeline Challenge</h2>
+  <p class="panel-note">The scientists have been shuffled. Click a name, then click the position on the timeline where it belongs. Click a placed name to send it back.</p>
+
+  <div class="wash lime">
+    <h3>How to play</h3>
+    <p>Earliest at position 1, most recent at position 6. Hint: the whole story spans from Ancient Greece to 1932.</p>
+  </div>
+
+  <h3 style="color:var(--teal); margin-top:18px;">Shuffled scientists</h3>
+  <div class="tl-pool" id="tl-pool"></div>
+
+  <h3 style="color:var(--teal); margin-top:22px;">Timeline — earliest to latest</h3>
+  <div class="tl-slots" id="tl-slots"></div>
+
+  <div class="tl-controls">
+    <button class="action" id="tl-check">Check my timeline</button>
+    <button class="action ghost" id="tl-reset">Reset</button>
+    <span id="tl-result" role="status"></span>
+  </div>
+</section>
+
+<!-- ================= PANEL 4 ================= -->
+<section class="panel" id="p4">
+  <h2>Model Match</h2>
+  <p class="panel-note">Click a discovery on the left, then the scientist it belongs to on the right. A correct pair locks in green.</p>
+
+  <div class="match-grid">
+    <div class="match-col" id="match-left"><h3>The discovery or idea</h3></div>
+    <div class="match-col" id="match-right"><h3>The scientist</h3></div>
+  </div>
+
+  <div class="wash sage" id="match-done">
+    <h3>All matched!</h3>
+    <p>Notice the pattern: each scientist kept what worked from the previous model and changed only what the new evidence demanded. Science builds — it doesn't start from scratch.</p>
+  </div>
+</section>
+
+<!-- ================= PANEL 5 ================= -->
+<section class="panel" id="p5">
+  <h2>Quiz &amp; Exit Ticket</h2>
+  <p class="panel-note">Eight questions, instant feedback. Then complete the exit ticket below and hand it in the way your teacher asks.</p>
+
+  <div id="quiz"></div>
+  <div id="quiz-score" role="status"></div>
+
+  <div class="wash coral exit" style="margin-top:34px;">
+    <h3>Exit ticket — CER paragraph</h3>
+    <p><strong>Claim to explain:</strong> <em>"Scientific models change when new evidence is discovered."</em> Write a paragraph using the atom's story as your evidence. Use at least two scientists by name.</p>
+    <p style="margin-top:8px;">
+      <button class="starter" data-s="I claim that scientific models change when ">Claim starter</button>
+      <button class="starter" data-s="For example, when Rutherford fired alpha particles at gold foil, he found that ">Evidence starter</button>
+      <button class="starter" data-s="This shows that models must change because ">Reasoning starter</button>
+    </p>
+    <textarea id="exit-text" aria-label="Exit ticket response"></textarea>
+    <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="action" id="copy-exit">Copy my answer</button>
+      <span id="copy-msg" role="status" style="font-weight:700; color:var(--teal);"></span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>Seaford Secondary College · Year 9 Science · Portraits via Wikimedia Commons (public domain)</footer>
+
+<script>
+/* ---------------- data ---------------- */
+const SCIENTISTS = [
+  {id:'democritus', name:'Democritus', dates:'c. 400 BCE', tag:'The idea', color:'var(--sage)', model:'atomos',
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Democritus2.jpg?width=200',
+   story:'A Greek philosopher who reasoned that if you kept cutting something in half, you would eventually reach a piece that could not be cut any further. He named it <span class="kw">atomos</span> — "uncuttable". No experiment, no evidence: just a powerful idea that sat waiting for over two thousand years.',
+   think:'Think: why did this idea go nowhere for 2,000 years? What was missing?'},
+  {id:'dalton', name:'John Dalton', dates:'1803', tag:'Solid sphere', color:'var(--lime)', model:'sphere',
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/John_Dalton_by_Charles_Turner.jpg?width=200',
+   story:'An English chemist who noticed that elements always combine in fixed ratios — water is always the same recipe of hydrogen and oxygen. His explanation: matter is made of <span class="kw">solid, indivisible spheres</span>, and every atom of an element is identical. The first atomic theory backed by measurement.',
+   think:'Think: which part of Dalton\u2019s model turned out to be wrong — "solid" or "spheres"?'},
+  {id:'thomson', name:'J. J. Thomson', dates:'1897', tag:'Plum pudding', color:'var(--pink)', model:'pudding',
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/J.J_Thomson.jpg?width=200',
+   story:'Experimenting with cathode ray tubes, Thomson discovered a particle nearly 2,000 times lighter than the smallest atom — the <span class="kw">electron</span>. Atoms could be cut after all! His new model: a ball of positive charge with negative electrons scattered through it, like fruit in a plum pudding.',
+   think:'Think: what evidence forced Thomson to abandon "indivisible"?'},
+  {id:'rutherford', name:'Ernest Rutherford', dates:'1911', tag:'Nuclear model', color:'var(--coral)', model:'nuclear',
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Ernest_Rutherford_LOC.jpg?width=200',
+   story:'His team fired alpha particles at gold foil, expecting them all to pass through the "pudding". Most did — but about 1 in 8,000 bounced almost straight back. Rutherford said it was like a shell rebounding off tissue paper. Conclusion: the atom is <span class="kw">mostly empty space</span> with a tiny, dense, positive <span class="kw">nucleus</span> at its centre.',
+   think:'Think: why do the particles that passed straight through matter just as much as the ones that bounced?'},
+  {id:'bohr', name:'Niels Bohr', dates:'1913', tag:'Energy levels', color:'var(--sky)', model:'bohr',
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Niels_Bohr.jpg?width=200',
+   story:'Rutherford\u2019s model had a problem: orbiting electrons should spiral into the nucleus. Bohr proposed that electrons can only sit in fixed <span class="kw">energy levels</span> (shells) at set distances from the nucleus, jumping between them by absorbing or releasing exact amounts of energy. This explained the coloured light given off by glowing gases.',
+   think:'Think: this is the shell model you use for electron configuration — 2, 8, 8.'},
+  {id:'chadwick', name:'James Chadwick', dates:'1932', tag:'The neutron', color:'var(--sage)', model:'neutron',
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/James_Chadwick.jpg?width=200',
+   story:'Atoms were heavier than their protons and electrons could explain. Chadwick found the missing mass: a particle in the nucleus with <span class="kw">no charge</span> and about the same mass as a proton — the <span class="kw">neutron</span>. The last piece of the atomic puzzle you\u2019ll use this year.',
+   think:'Think: why was a particle with no charge so much harder to detect than the electron or proton?'}
+];
+
+/* ---------------- atom drawings ---------------- */
+const NS='http://www.w3.org/2000/svg';
+function el(t,a){const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e;}
+function drawAtom(model){
+  const svg=document.getElementById('atom-svg'); svg.innerHTML='';
+  const C={lime:'#BDD675', coral:'#F46E63', pink:'#F38C9F', sky:'#C0E7F8', sage:'#7AC698'};
+  const cx=100, cy=100;
+  const electron=(x,y)=>svg.appendChild(el('circle',{cx:x,cy:y,r:6,fill:C.sky}));
+  if(model==='atomos'||model==='sphere'){
+    svg.appendChild(el('circle',{cx,cy,r:64,fill:model==='atomos'?C.sage:C.lime}));
+    svg.appendChild(el('circle',{cx:80,cy:80,r:18,fill:'#ffffff',opacity:.25}));
+  } else if(model==='pudding'){
+    svg.appendChild(el('circle',{cx,cy,r:70,fill:C.pink}));
+    [[70,75],[125,65],[100,110],[65,125],[135,120],[100,55],[80,150],[140,90]].forEach(p=>electron(p[0],p[1]));
+  } else if(model==='nuclear'){
+    svg.appendChild(el('circle',{cx,cy,r:78,fill:'none',stroke:'#C0E7F8',"stroke-dasharray":'3 5'}));
+    svg.appendChild(el('circle',{cx,cy,r:9,fill:C.coral}));
+    [[45,60],[150,50],[160,140],[55,150],[120,170]].forEach(p=>electron(p[0],p[1]));
+  } else if(model==='bohr'||model==='neutron'){
+    [34,58,80].forEach(r=>svg.appendChild(el('circle',{cx,cy,r,fill:'none',stroke:'#C0E7F8',"stroke-width":1.5})));
+    if(model==='bohr'){ svg.appendChild(el('circle',{cx,cy,r:10,fill:C.coral})); }
+    else{
+      [[-6,-4,C.coral],[6,-4,'#ffffff'],[-6,5,'#ffffff'],[6,5,C.coral],[0,0,C.coral]].forEach(p=>
+        svg.appendChild(el('circle',{cx:cx+p[0],cy:cy+p[1],r:6,fill:p[2]})));
+    }
+    electron(cx+34,cy); electron(cx-34,cy);
+    electron(cx,cy-58); electron(cx,cy+58); electron(cx+50,cy-29); electron(cx-50,cy+29);
+    electron(cx+80,cy); electron(cx-80,cy);
+  }
+}
+const LABELS={
+  atomos:'Democritus — "atomos": an uncuttable particle',
+  sphere:'Dalton — solid sphere, identical for each element',
+  pudding:'Thomson — electrons scattered in positive "pudding"',
+  nuclear:'Rutherford — tiny dense nucleus, mostly empty space',
+  bohr:'Bohr — electrons in fixed energy levels',
+  neutron:'Chadwick — protons AND neutrons in the nucleus'
+};
+
+/* ---------------- scientist cards ---------------- */
+const list=document.getElementById('sci-list');
+SCIENTISTS.forEach(s=>{
+  const card=document.createElement('button');
+  card.className='sci-card'; card.setAttribute('aria-expanded','false');
+  card.innerHTML=`
+    <div class="sci-head">
+      <img src="${s.img}" alt="Portrait of ${s.name}" loading="lazy"
+           onerror="this.outerHTML='<div class=&quot;ph&quot;>${s.name.split(' ').map(w=>w[0]).join('')}</div>'">
+      <div class="sci-title"><h3>${s.name}</h3><div class="dates">${s.dates}</div></div>
+      <span class="sci-tag" style="background:${s.color}">${s.tag}</span>
+    </div>
+    <div class="sci-body"><p>${s.story}</p><div class="think">${s.think}</div></div>`;
+  card.addEventListener('click',()=>{
+    const wasOpen=card.classList.contains('open');
+    document.querySelectorAll('.sci-card').forEach(c=>{c.classList.remove('open'); c.setAttribute('aria-expanded','false');});
+    if(!wasOpen){ card.classList.add('open'); card.setAttribute('aria-expanded','true'); }
+    drawAtom(s.model);
+    document.getElementById('atom-label').textContent=LABELS[s.model];
+  });
+  list.appendChild(card);
+});
+drawAtom('atomos');
+document.getElementById('atom-label').textContent='Click a scientist to see their model';
+
+/* ---------------- timeline ---------------- */
+const ORDER=SCIENTISTS.map(s=>s.id);
+let tlSelected=null;
+function makeTlItem(s){
+  const b=document.createElement('button');
+  b.className='tl-item'; b.dataset.id=s.id;
+  b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} — <em style="color:var(--muted); font-style:normal; font-size:.85rem;">${s.tag}</em>`;
+  b.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(b.parentElement.classList.contains('tl-slot')){ document.getElementById('tl-pool').appendChild(b); b.classList.remove('selected'); tlSelected=null; clearTlMarks(); return; }
+    document.querySelectorAll('.tl-item').forEach(i=>i.classList.remove('selected'));
+    tlSelected=b; b.classList.add('selected');
+  });
+  return b;
+}
+function clearTlMarks(){ document.querySelectorAll('.tl-slot').forEach(s=>s.classList.remove('correct','wrong')); document.getElementById('tl-result').textContent=''; }
+function buildTimeline(){
+  const pool=document.getElementById('tl-pool'), slots=document.getElementById('tl-slots');
+  pool.innerHTML=''; slots.innerHTML=''; tlSelected=null;
+  const shuffled=[...SCIENTISTS].sort(()=>Math.random()-.5);
+  shuffled.forEach(s=>pool.appendChild(makeTlItem(s)));
+  for(let i=1;i<=6;i++){
+    const slot=document.createElement('div');
+    slot.className='tl-slot'; slot.innerHTML=`<span class="slot-num">${i}</span>`;
+    slot.addEventListener('click',()=>{
+      if(!tlSelected) return;
+      if(slot.querySelector('.tl-item')) document.getElementById('tl-pool').appendChild(slot.querySelector('.tl-item'));
+      slot.appendChild(tlSelected); tlSelected.classList.remove('selected'); tlSelected=null; clearTlMarks();
+    });
+    slots.appendChild(slot);
+  }
+}
+buildTimeline();
+document.getElementById('tl-reset').addEventListener('click',()=>{buildTimeline(); clearTlMarks();});
+document.getElementById('tl-check').addEventListener('click',()=>{
+  const slots=[...document.querySelectorAll('.tl-slot')];
+  let right=0, placed=0;
+  slots.forEach((slot,i)=>{
+    const item=slot.querySelector('.tl-item');
+    slot.classList.remove('correct','wrong');
+    if(!item) return;
+    placed++;
+    if(item.dataset.id===ORDER[i]){ slot.classList.add('correct'); right++; } else slot.classList.add('wrong');
+  });
+  const res=document.getElementById('tl-result');
+  if(placed<6) res.textContent=`Place all six first (${placed}/6 placed).`;
+  else if(right===6) res.textContent='Perfect — 2,400 years in the right order!';
+  else res.textContent=`${right}/6 correct. Red slots need another look.`;
+});
+
+/* ---------------- model match ---------------- */
+const PAIRS=[
+  ['Reasoned that matter is made of "uncuttable" particles','Democritus'],
+  ['Proposed atoms are solid spheres, identical for each element','John Dalton'],
+  ['Discovered the electron using cathode ray tubes','J. J. Thomson'],
+  ['Gold foil experiment revealed a tiny, dense nucleus','Ernest Rutherford'],
+  ['Placed electrons in fixed energy levels around the nucleus','Niels Bohr'],
+  ['Discovered the neutron — the uncharged particle in the nucleus','James Chadwick']
+];
+let leftSel=null, matched=0;
+function makeMItem(text, idx, side){
+  const b=document.createElement('button');
+  b.className='m-item'; b.textContent=text; b.dataset.idx=idx;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('matched')) return;
+    if(side==='L'){ document.querySelectorAll('#match-left .m-item').forEach(i=>i.classList.remove('selected')); leftSel=b; b.classList.add('selected'); }
+    else{
+      if(!leftSel) return;
+      if(leftSel.dataset.idx===b.dataset.idx){
+        leftSel.classList.remove('selected'); leftSel.classList.add('matched'); b.classList.add('matched');
+        leftSel=null; matched++;
+        if(matched===PAIRS.length) document.getElementById('match-done').style.display='block';
+      } else { b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),350); }
+    }
+  });
+  return b;
+}
+const L=document.getElementById('match-left'), R=document.getElementById('match-right');
+[...PAIRS.keys()].sort(()=>Math.random()-.5).forEach(i=>L.appendChild(makeMItem(PAIRS[i][0], i, 'L')));
+[...PAIRS.keys()].sort(()=>Math.random()-.5).forEach(i=>R.appendChild(makeMItem(PAIRS[i][1], i, 'R')));
+
+/* ---------------- quiz ---------------- */
+const QUIZ=[
+  {s:'Who first proposed the idea of "atomos" — an uncuttable particle?', o:['John Dalton','Democritus','Aristotle','J. J. Thomson'], a:1,
+   fb:'Democritus, around 400 BCE — a pure idea with no experimental evidence.'},
+  {s:'Dalton\u2019s 1803 model described atoms as:', o:['Mostly empty space','Positive spheres with electrons inside','Solid, indivisible spheres','Clouds of probability'], a:2,
+   fb:'Solid spheres, identical for each element — based on fixed ratios in chemical reactions.'},
+  {s:'Which particle did Thomson discover in 1897?', o:['The proton','The neutron','The nucleus','The electron'], a:3,
+   fb:'The electron — proving atoms could be divided after all.'},
+  {s:'In the plum pudding model, the electrons are:', o:['Orbiting in fixed shells','Scattered through a ball of positive charge','Inside the nucleus','Absent entirely'], a:1,
+   fb:'Negative electrons dotted through a sphere of positive charge, like fruit in a pudding.'},
+  {s:'In the gold foil experiment, most alpha particles:', o:['Bounced straight back','Were absorbed by the foil','Passed straight through','Stuck to the gold atoms'], a:2,
+   fb:'Most passed straight through — evidence that the atom is mostly empty space.'},
+  {s:'The few alpha particles that rebounded told Rutherford that:', o:['Gold is very soft','The atom has a small, dense, positive nucleus','Electrons are heavy','Atoms are solid throughout'], a:1,
+   fb:'Only a tiny, concentrated, positive core could repel an alpha particle backwards.'},
+  {s:'Bohr improved Rutherford\u2019s model by adding:', o:['The neutron','Fixed energy levels for electrons','A larger nucleus','Positive electrons'], a:1,
+   fb:'Electrons can only occupy set shells — jumping between them absorbs or releases exact energy.'},
+  {s:'Chadwick\u2019s 1932 discovery explained why atoms:', o:['Give off light','Are mostly empty space','Have more mass than protons + electrons account for','Are electrically charged'], a:2,
+   fb:'The neutron — no charge, proton-sized mass, hiding in the nucleus.'}
+];
+let score=0, answered=0;
+const quizBox=document.getElementById('quiz');
+QUIZ.forEach((q,qi)=>{
+  const d=document.createElement('div'); d.className='q';
+  d.innerHTML=`<p class="stem">${qi+1}. ${q.s}</p>`;
+  const opts=document.createElement('div'); opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button'); b.className='opt'; b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(d.dataset.done) return;
+      d.dataset.done='1'; answered++;
+      const fb=d.querySelector('.fb');
+      if(oi===q.a){ b.classList.add('right'); score++; fb.classList.add('good'); fb.textContent='Correct — '+q.fb; }
+      else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); fb.classList.add('bad'); fb.textContent='Not quite. '+q.fb; }
+      fb.classList.add('show');
+      if(answered===QUIZ.length) document.getElementById('quiz-score').textContent=`Final score: ${score} / ${QUIZ.length}${score===QUIZ.length?' — flawless!':score>=6?' — solid work.':' — revisit the scientist cards and try the timeline again.'}`;
+    });
+    opts.appendChild(b);
+  });
+  d.appendChild(opts);
+  const fb=document.createElement('div'); fb.className='fb'; d.appendChild(fb);
+  quizBox.appendChild(d);
+});
+
+/* ---------------- exit ticket ---------------- */
+document.querySelectorAll('.starter').forEach(b=>b.addEventListener('click',()=>{
+  const t=document.getElementById('exit-text');
+  t.value+= (t.value && !t.value.endsWith(' ') ? ' ' : '') + b.dataset.s;
+  t.focus();
+}));
+document.getElementById('copy-exit').addEventListener('click',async()=>{
+  const t=document.getElementById('exit-text').value;
+  const msg=document.getElementById('copy-msg');
+  try{ await navigator.clipboard.writeText(t); msg.textContent='Copied!'; }
+  catch{ msg.textContent='Select your text and press Ctrl+C.'; }
+  setTimeout(()=>msg.textContent='',2500);
+});
+
+/* ---------------- tabs ---------------- */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById(t.dataset.panel).classList.add('active');
+  window.scrollTo({top:0});
+}));
+</script>
+</body>
+</html>
